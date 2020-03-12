@@ -1,0 +1,34 @@
+[workspace]
+projects = [
+	"kaaninel"
+]
+services = [
+	"pen",
+	"ledger",
+	"auth"
+]
+
+[project.kaaninel]
+interface = "blog"
+gateway = [
+	"http"
+]
+
+[service.pen]
+Tags = [
+	"graph"
+]
+
+[service.ledger]
+Tags = [
+	"graph"
+]
+
+[service.auth]
+Tags = [
+	"auth"
+]
+
+[gateway.http]
+
+[interface.blog]

@@ -1,0 +1,3 @@
+#!/bin/sh
+cd /Users/kaaninel/Documents/GitHub/link
+project_path="/Users/kaaninel/Documents/GitHub/kaaninel" catflap -- cargo watch -x run
