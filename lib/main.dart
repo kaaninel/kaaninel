@@ -11,20 +11,43 @@ class MainApp extends StatefulWidget {
   State<MainApp> createState() => _MainAppState();
 }
 
-class _MainAppState extends State<MainApp> {
+class _MainAppState extends State<MainApp> with SingleTickerProviderStateMixin {
+  late final AnimationController controller = AnimationController(
+      duration: const Duration(milliseconds: 400), vsync: this);
+  @override
+  void initState() {
+    super.initState();
+    asyncInit();
+  }
+
+  asyncInit() async {
+    while (true) {
+      await controller.forward();
+      await controller.reverse();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        backgroundColor: Color(0xFF3A3A3A),
+        backgroundColor: const Color(0xFF3A3A3A),
         body: Center(
-            child: Logo(
-          size: 160,
-          filled: true,
-        )),
+            child: AnimatedBuilder(
+                animation: controller,
+                builder: (context, child) {
+                  return Logo(
+                      size: 160, filled: true, progress: controller.value);
+                })),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 }
 
@@ -106,6 +129,8 @@ class LogoPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(LogoPainter oldDelegate) {
-    return color != oldDelegate.color || filled != oldDelegate.filled;
+    return color != oldDelegate.color ||
+        filled != oldDelegate.filled ||
+        progress != oldDelegate.progress;
   }
 }
