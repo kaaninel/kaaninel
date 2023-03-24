@@ -1,6 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:kaaninel/entry.dart';
-import 'package:kaaninel/profile.dart';
+import 'package:flutter/services.dart';
+import 'package:kaaninel/pages/entry.dart';
+import 'package:kaaninel/pages/info.dart';
+import 'package:kaaninel/pages/intro.dart';
 
 void main() {
   runApp(const MainApp());
@@ -13,42 +17,57 @@ class MainApp extends StatefulWidget {
   State<MainApp> createState() => _MainAppState();
 }
 
+const primaryColor = Color.fromARGB(255, 255, 122, 13);
+const scaffoldBackground = Color.fromARGB(200, 58, 58, 58);
+
 class _MainAppState extends State<MainApp> {
   int currentPage = 0;
 
-  final pages = const [Entry(), Profile()];
+  static const pages = [
+    Entry(),
+    Intro(),
+    Info(),
+  ];
+  static final theme = ThemeData.from(
+      colorScheme: ColorScheme.fromSeed(
+    seedColor: primaryColor,
+    primary: primaryColor,
+    background: scaffoldBackground,
+  ));
+
+  @override
+  void initState() {
+    super.initState();
+    SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData.from(
-          colorScheme: ColorScheme.fromSeed(
-              seedColor: const Color.fromARGB(255, 255, 122, 13),
-              primary: const Color.fromARGB(255, 255, 122, 13),
-              background: const Color(0xFF3A3A3A))),
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-          body: Stack(children: [
-        PageView(
-            onPageChanged: (value) => setState(() => currentPage = value),
-            scrollDirection: Axis.vertical,
+        theme: theme,
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+            backgroundColor: scaffoldBackground,
+            body: Center(
+              child: Builder(builder: grid),
+            )));
+  }
+
+  Widget grid(context) {
+    final diff = MediaQuery.of(context).size.width - 320 - 64;
+    final padding = max<double>(min(diff, 64), 0);
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.all(padding),
+        child: Wrap(
+            spacing: padding,
+            runSpacing: padding,
+            alignment: WrapAlignment.center,
+            runAlignment: WrapAlignment.center,
+            crossAxisAlignment: WrapCrossAlignment.center,
             children: pages),
-        Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          for (int i = 0; i < pages.length; i++)
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 100),
-                width: 16,
-                height: 16,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
-                  color: currentPage == i ? Colors.white70 : Colors.white12,
-                ),
-              ),
-            )
-        ])
-      ])),
+      ),
     );
   }
 }
