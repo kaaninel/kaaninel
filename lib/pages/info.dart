@@ -10,7 +10,10 @@ class Info extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PageScaffold(children: [
-      const Text("Contact with me", style: textStyle),
+      const SizedBox(
+          width: double.infinity,
+          child: Text("Contact with me",
+              style: textStyle, textAlign: TextAlign.start)),
       const InfoItem("Send an email", "kaaninel@gmail.com"),
       const InfoItem("Call, SMS or Whatsapp", "+90 (534) 368 80 84"),
       const InfoItem("Meet up", "Atakum / Samsun, Turkey"),

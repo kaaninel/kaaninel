@@ -12,13 +12,16 @@ class Intro extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PageScaffold(lastOfSeq: true, children: [
-      RichText(
-          textAlign: TextAlign.start,
-          text: TextSpan(text: "Hello, I’m ", style: textStyle, children: [
-            TextSpan(
-                text: "Kaan",
-                style: TextStyle(color: Theme.of(context).primaryColor))
-          ])),
+      SizedBox(
+        width: double.infinity,
+        child: RichText(
+            textAlign: TextAlign.start,
+            text: TextSpan(text: "Hello, I’m ", style: textStyle, children: [
+              TextSpan(
+                  text: "Kaan",
+                  style: TextStyle(color: Theme.of(context).primaryColor))
+            ])),
+      ),
       const SizedBox(
           width: double.infinity,
           child: Text("& I’m a", style: textStyle, textAlign: TextAlign.start)),
