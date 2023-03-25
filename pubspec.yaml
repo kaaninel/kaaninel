@@ -1,5 +1,5 @@
 name: kaaninel
-description: A new Flutter project.
+description: Personal website.
 publish_to: "none"
 version: 0.1.0
 
@@ -9,6 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  url_launcher: ^6.1.10
 
 dev_dependencies:
   flutter_test:
